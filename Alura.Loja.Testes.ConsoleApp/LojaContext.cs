@@ -13,6 +13,8 @@ namespace Alura.Loja.Testes.ConsoleApp
         //O tipo dessas classes será DbSet<CLASSE DO DOMÍNIO>
         public DbSet<Produto> Produtos { get; set; }
 
+        public DbSet<Compra> Compras { get; set; }
+
         public LojaContext()
         {
             //O método Migrate serve para sincronizar as alterações nas classes da aplica~ção, com o banco de dados

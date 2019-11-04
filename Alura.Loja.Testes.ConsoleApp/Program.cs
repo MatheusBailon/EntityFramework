@@ -13,10 +13,18 @@ namespace Alura.Loja.Testes.ConsoleApp
     {
         static void Main(string[] args)
         {
+            var pao = new Produto()
+            {
+                Nome = "Pão Francês",
+                PrecoUnitario = 0.4,
+                Unidade = "Unidade",
+                Categoria = "Padaria"
+            };
 
-            
-
-            Console.ReadLine();
+            var compra = new Compra();
+            compra.Quantidade = 6;
+            compra.Produto = pao;
+            compra.Preco = pao.PrecoUnitario * compra.Quantidade;
         }
 
     }
