@@ -15,7 +15,9 @@ namespace Alura.Loja.Testes.ConsoleApp
 
         public LojaContext()
         {
-
+            //O método Migrate serve para sincronizar as alterações nas classes da aplica~ção, com o banco de dados
+            //Este método deve ser executado antes de qualquer acesso aos objetos gereciados pelo contexto
+            //this.Database.Migrate();
         }
 
         public LojaContext(DbContextOptions<LojaContext> options) : base(options)

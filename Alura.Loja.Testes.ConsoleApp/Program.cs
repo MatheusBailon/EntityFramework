@@ -14,45 +14,7 @@ namespace Alura.Loja.Testes.ConsoleApp
         static void Main(string[] args)
         {
 
-            using (var contexto = new LojaContext())
-            {
-                var serviceProvider = contexto.GetInfrastructure<IServiceProvider>();
-                var loggerFactory = serviceProvider.GetService<ILoggerFactory>();
-                loggerFactory.AddProvider(SqlLoggerProvider.Create());
-
-
-                var produtos = contexto.Produtos.ToList();
-                foreach (Produto p in produtos)
-                {
-                    Console.WriteLine(p);
-                }
-                var p1 = contexto.Produtos.Last();
-                p1.Nome = "Carga Explosiva";
-                Console.WriteLine("*".PadRight(10));
-
-                var entriesList = contexto.ChangeTracker.Entries();
-                foreach (var e in entriesList)
-                {
-                    Console.WriteLine(e.State);
-                }
-
-                contexto.SaveChanges();
-            }
-
-
-            //var p1 = contexto.Produtos.First();
-            //p1.Nome = "Processo de Update sem usar o metodo UPDATE";
-            //contexto.SaveChanges();
-
-            //Console.ReadLine();
-            //Console.WriteLine("*** APÓS A ATUALIZAÇÃO ***");
-            //Console.ReadLine();
-
-            //produtos = contexto.Produtos.ToList();
-            //foreach (Produto p in produtos)
-            //{
-            //    Console.WriteLine(p);
-            //}
+            
 
             Console.ReadLine();
         }
