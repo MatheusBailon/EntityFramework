@@ -12,6 +12,8 @@ namespace Alura.Loja.Testes.ConsoleApp
         //Nesta classe da mesma forma que em promocao, ela irá apontar para a classe auxiliar
         public IList<PromocaoProduto> Promocoes { get; set; }
 
+        public IList<Compra> Compras { get; set; }
+
         public override string ToString()
         {
             return $"Produto: {Id} {Nome}, {Categoria}, {PrecoUnitario}";
