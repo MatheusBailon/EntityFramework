@@ -188,11 +188,16 @@
     <Compile Include="Migrations\20191104223821_Compra.designer.cs">
       <DependentUpon>20191104223821_Compra.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20191105143229_Promocao.cs" />
+    <Compile Include="Migrations\20191105143229_Promocao.designer.cs">
+      <DependentUpon>20191105143229_Promocao.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\LojaContextModelSnapshot.cs" />
     <Compile Include="Produto.cs" />
     <Compile Include="ProdutoEntityDAO.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Promocao.cs" />
+    <Compile Include="PromocaoProduto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlLoggerProvider.cs" />
   </ItemGroup>

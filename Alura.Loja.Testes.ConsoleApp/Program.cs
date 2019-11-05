@@ -16,16 +16,20 @@ namespace Alura.Loja.Testes.ConsoleApp
 
         static void Main(string[] args)
         {
+            Produto p1 = new Produto() { Nome = "Suco de Laranja", Categoria = "Bebidas", PrecoUnitario = 1.25, Unidade = "Litros" };
+            Produto p2 = new Produto() { Nome = "Café", Categoria = "Bebidas", PrecoUnitario = 12.48, Unidade = "Gramas" }; ;
+            Produto p3 = new Produto() { Nome = "Macarrão", Categoria = "Alimentos", PrecoUnitario = 3.79, Unidade = "Gramas" }; ;
 
             var promocaoDePascoa = new Promocao();
             promocaoDePascoa.Descricao = "Páscoa Feliz";
             promocaoDePascoa.DataInicio = DateTime.Now;
             promocaoDePascoa.DataTermino = DateTime.Now.AddMonths(3);
 
+            
             //Adicionando produtos
-            promocaoDePascoa.Produtos.Add(new Produto());
-            promocaoDePascoa.Produtos.Add(new Produto());
-            promocaoDePascoa.Produtos.Add(new Produto());
+            promocaoDePascoa.IncluirProduto(p1);
+            promocaoDePascoa.IncluirProduto(p2);
+            promocaoDePascoa.IncluirProduto(p3);
 
 
             //Adicionando a classe de Logger
@@ -36,6 +40,11 @@ namespace Alura.Loja.Testes.ConsoleApp
                 var loggerFactory = serviceProvider.GetService<ILoggerFactory>();
                 loggerFactory.AddProvider(SqlLoggerProvider.Create());
                 //*** Fim do Log ***
+
+                //contexto.Promocoes.Add(promocaoDePascoa);
+                var promocao = contexto.Promocoes.Find(1);
+                contexto.Promocoes.Remove(promocao);
+                contexto.SaveChanges();
             }
 
 
