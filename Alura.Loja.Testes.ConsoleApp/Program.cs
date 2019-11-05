@@ -25,10 +25,17 @@ namespace Alura.Loja.Testes.ConsoleApp
                 loggerFactory.AddProvider(SqlLoggerProvider.Create());
 
 
+                //var promocao = segContexto
+                //    .Promocoes
+                //    .Include(p => p.Produtos)
+                //    .ThenInclude(pp => pp.Produto)
+                //    .FirstOrDefault();
+
+                // Também podmeos utilizar esta pequena variação do Include, onde não precisamos de um segundo método
+                // Onde informa o nome da propriedade a se incluída no Join.
                 var promocao = segContexto
                     .Promocoes
-                    .Include(p => p.Produtos)
-                    .ThenInclude(pp => pp.Produto)
+                    .Include("Produtos.Produto")
                     .FirstOrDefault();
 
                 Console.WriteLine($"\nMostrando os itens da promocao {promocao.Descricao}");
