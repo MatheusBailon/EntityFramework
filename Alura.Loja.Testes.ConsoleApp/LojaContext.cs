@@ -15,6 +15,8 @@ namespace Alura.Loja.Testes.ConsoleApp
 
         public DbSet<Compra> Compras { get; set; }
 
+        public DbSet<Promocao> Promocoes { get; set; }
+
         public LojaContext()
         {
             //O método Migrate serve para sincronizar as alterações nas classes da aplica~ção, com o banco de dados

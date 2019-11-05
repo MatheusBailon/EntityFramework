@@ -192,6 +192,7 @@
     <Compile Include="Produto.cs" />
     <Compile Include="ProdutoEntityDAO.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Promocao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlLoggerProvider.cs" />
   </ItemGroup>

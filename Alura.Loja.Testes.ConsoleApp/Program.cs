@@ -12,23 +12,23 @@ namespace Alura.Loja.Testes.ConsoleApp
 {
     class Program
     {
+        public static object PromocaoDePascoa { get; private set; }
+
         static void Main(string[] args)
         {
-            var pao = new Produto()
-            {
-                Nome = "Pão Francês",
-                PrecoUnitario = 0.4,
-                Unidade = "Unidade",
-                Categoria = "Padaria"
-            };
 
-            var compra = new Compra();
-            compra.Quantidade = 16;
-            compra.Produto = pao;
-            compra.Preco = pao.PrecoUnitario * compra.Quantidade;
+            var promocaoDePascoa = new Promocao();
+            promocaoDePascoa.Descricao = "Páscoa Feliz";
+            promocaoDePascoa.DataInicio = DateTime.Now;
+            promocaoDePascoa.DataTermino = DateTime.Now.AddMonths(3);
+
+            //Adicionando produtos
+            promocaoDePascoa.Produtos.Add(new Produto());
+            promocaoDePascoa.Produtos.Add(new Produto());
+            promocaoDePascoa.Produtos.Add(new Produto());
+
 
             //Adicionando a classe de Logger
-
             using (var contexto = new LojaContext())
             {
                 //*** Adicionando Log (para exibir as consultas realizadas pelo Entity) ***
@@ -36,23 +36,18 @@ namespace Alura.Loja.Testes.ConsoleApp
                 var loggerFactory = serviceProvider.GetService<ILoggerFactory>();
                 loggerFactory.AddProvider(SqlLoggerProvider.Create());
                 //*** Fim do Log ***
-
-                contexto.Compras.Add(compra);
-
-                ExibeEntries(contexto.ChangeTracker.Entries());
-
-                contexto.SaveChanges();
             }
 
-            static void ExibeEntries(IEnumerable<EntityEntry> entries)
-            {
-                foreach (var item in entries)
-                {
-                    Console.WriteLine($"{item.Entity.ToString()} - {item.State}");
-                }
-            }
 
             Console.ReadLine();
+        }
+
+        private static void ExibeEntries(IEnumerable<EntityEntry> entries)
+        {
+            foreach (var e in entries)
+            {
+                Console.WriteLine(e.Entity.ToString() + " - " + e.State);
+            }
         }
 
     }
