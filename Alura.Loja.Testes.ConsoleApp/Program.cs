@@ -24,18 +24,33 @@ namespace Alura.Loja.Testes.ConsoleApp
                 var loggerFactory = serviceProvider.GetService<ILoggerFactory>();
                 loggerFactory.AddProvider(SqlLoggerProvider.Create());
 
+                var compra = new Compra();
+
+                compra.Quantidade = 1000;
+                compra.Produto = contexto.Produtos.Where(p=>p.Id==11).FirstOrDefault();
+                compra.Preco = compra.Quantidade * compra.Produto.PrecoUnitario;
+
+                contexto.Compras.Add(compra);
+                contexto.SaveChanges();
+
                 var cliente = contexto.Clientes.Include(c=>c.EnderecoDeEntrega).FirstOrDefault();
                 Console.WriteLine(cliente.EnderecoDeEntrega.Logradouro);
 
                 var produto = contexto
                     .Produtos
-                    .Include(c=>c.Compras)
                     .Where(p => p.Id == 11)
                     .FirstOrDefault();
 
+                //Construção de uma consulta, aplicando a condição num item de uma entidade secundaria
+                contexto.Entry(produto)
+                    .Collection(p => p.Compras)
+                    .Query()
+                    .Where(c => c.Preco > 10)
+                    .Load();
+
                 foreach (var item in produto.Compras)
                 {
-                    Console.WriteLine($"Compra: {item.Id}, quantidade {item.Quantidade}");
+                    Console.WriteLine($"{item.Preco}, {item.Quantidade}");
                 }
 
             }
