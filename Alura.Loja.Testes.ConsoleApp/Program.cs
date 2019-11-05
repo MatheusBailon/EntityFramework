@@ -18,35 +18,53 @@ namespace Alura.Loja.Testes.ConsoleApp
         static void Main(string[] args)
         {
             
-            using(var segContexto = new LojaContext())
+            using(var contexto = new LojaContext())
             {
-                var serviceProvider = segContexto.GetInfrastructure<IServiceProvider>();
+                var serviceProvider = contexto.GetInfrastructure<IServiceProvider>();
                 var loggerFactory = serviceProvider.GetService<ILoggerFactory>();
                 loggerFactory.AddProvider(SqlLoggerProvider.Create());
 
+                var cliente = contexto.Clientes.Include(c=>c.EnderecoDeEntrega).FirstOrDefault();
+                Console.WriteLine(cliente.EnderecoDeEntrega.Logradouro);
 
-                //var promocao = segContexto
-                //    .Promocoes
-                //    .Include(p => p.Produtos)
-                //    .ThenInclude(pp => pp.Produto)
-                //    .FirstOrDefault();
-
-                // Também podmeos utilizar esta pequena variação do Include, onde não precisamos de um segundo método
-                // Onde informa o nome da propriedade a se incluída no Join.
-                var promocao = segContexto
-                    .Promocoes
-                    .Include("Produtos.Produto")
+                var produto = contexto
+                    .Produtos
+                    .Include(c=>c.Compras)
+                    .Where(p => p.Id == 11)
                     .FirstOrDefault();
 
-                Console.WriteLine($"\nMostrando os itens da promocao {promocao.Descricao}");
-                foreach (var p in promocao.Produtos)
+                foreach (var item in produto.Compras)
                 {
-                    Console.WriteLine(p.Produto);
+                    Console.WriteLine($"Compra: {item.Id}, quantidade {item.Quantidade}");
                 }
+
             }
 
 
             Console.ReadLine();
+        }
+
+        private static void ExibeProdutosDaPromocao()
+        {
+            var contexto = new LojaContext();
+            //var promocao = segContexto
+            //    .Promocoes
+            //    .Include(p => p.Produtos)
+            //    .ThenInclude(pp => pp.Produto)
+            //    .FirstOrDefault();
+
+            // Também podmeos utilizar esta pequena variação do Include, onde não precisamos de um segundo método
+            // Onde informa o nome da propriedade a se incluída no Join.
+            var promocao = contexto
+                .Promocoes
+                .Include("Produtos.Produto")
+                .FirstOrDefault();
+
+            Console.WriteLine($"\nMostrando os itens da promocao {promocao.Descricao}");
+            foreach (var p in promocao.Produtos)
+            {
+                Console.WriteLine(p.Produto);
+            }
         }
 
         private static void IncluirPromocao()
