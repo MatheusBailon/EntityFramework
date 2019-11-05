@@ -18,18 +18,19 @@ namespace Alura.Loja.Testes.ConsoleApp
         {
 
             var mano = new Cliente();
-            mano.Nome = "Dino da Silva Sauro";
+            mano.Nome = "Osvaldo Oliveira";
 
             mano.EnderecoDeEntrega = new Endereco()
             {
                 Numero = 4,
-                Logradouro = "Rua dos Alferneiros",
+                Logradouro = "Rua dos Ex-Treinadores",
                 Bairro = "Centro",
-                Cidade = "Inglaterra"
+                Cidade = "São Paulo"
             };
 
             using(var contexto = new LojaContext())
             {
+                
                 contexto.Clientes.Add(mano);
                 contexto.SaveChanges();
             }

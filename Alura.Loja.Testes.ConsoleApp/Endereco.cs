@@ -7,5 +7,6 @@
         public string Complemento { get; set; }
         public string Bairro { get; internal set; }
         public string Cidade { get; internal set; }
+        public Cliente Cliente { get; set; }
     }
 }

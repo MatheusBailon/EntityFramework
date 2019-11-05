@@ -45,9 +45,10 @@ namespace Alura.Loja.Testes.ConsoleApp
                 .Entity<PromocaoProduto>()
                 .HasKey(pp => new { pp.PromocaoId, pp.ProdutoId });
 
-            //modelBuilder
-            //    .Entity<Endereco>()
-            //    .ToTable("Enderecos");
+            //modifica o nome da Entidade no banco de dados (desta forma, para o BD a classe Endereco será chamada de Enderecos)
+            modelBuilder
+                .Entity<Endereco>()
+                .ToTable("Enderecos");
 
             //Shadow Property - Propriedade que existe apenas no ambiente relacional (no banco de dados)
             modelBuilder
