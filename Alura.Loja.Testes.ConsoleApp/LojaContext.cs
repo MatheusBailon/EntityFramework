@@ -16,6 +16,7 @@ namespace Alura.Loja.Testes.ConsoleApp
         public DbSet<Compra> Compras { get; set; }
 
         public DbSet<Promocao> Promocoes { get; set; }
+        public DbSet<Cliente> Clientes { get; set; }
 
         public LojaContext()
         {
@@ -43,6 +44,20 @@ namespace Alura.Loja.Testes.ConsoleApp
             modelBuilder
                 .Entity<PromocaoProduto>()
                 .HasKey(pp => new { pp.PromocaoId, pp.ProdutoId });
+
+            //modelBuilder
+            //    .Entity<Endereco>()
+            //    .ToTable("Enderecos");
+
+            //Shadow Property - Propriedade que existe apenas no ambiente relacional (no banco de dados)
+            modelBuilder
+                .Entity<Endereco>()
+                .Property<int>("ClienteId");
+
+            modelBuilder
+                .Entity<Endereco>()
+                .HasKey("ClienteId");
+
             base.OnModelCreating(modelBuilder);
         }
     }

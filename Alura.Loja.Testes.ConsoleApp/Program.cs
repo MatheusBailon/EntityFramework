@@ -16,6 +16,29 @@ namespace Alura.Loja.Testes.ConsoleApp
 
         static void Main(string[] args)
         {
+
+            var mano = new Cliente();
+            mano.Nome = "Dino da Silva Sauro";
+
+            mano.EnderecoDeEntrega = new Endereco()
+            {
+                Numero = 4,
+                Logradouro = "Rua dos Alferneiros",
+                Bairro = "Centro",
+                Cidade = "Inglaterra"
+            };
+
+            using(var contexto = new LojaContext())
+            {
+                contexto.Clientes.Add(mano);
+                contexto.SaveChanges();
+            }
+
+            Console.ReadLine();
+        }
+
+        private static void MuitosParaMuitos()
+        {
             Produto p1 = new Produto() { Nome = "Suco de Laranja", Categoria = "Bebidas", PrecoUnitario = 1.25, Unidade = "Litros" };
             Produto p2 = new Produto() { Nome = "Café", Categoria = "Bebidas", PrecoUnitario = 12.48, Unidade = "Gramas" }; ;
             Produto p3 = new Produto() { Nome = "Macarrão", Categoria = "Alimentos", PrecoUnitario = 3.79, Unidade = "Gramas" }; ;
@@ -25,7 +48,7 @@ namespace Alura.Loja.Testes.ConsoleApp
             promocaoDePascoa.DataInicio = DateTime.Now;
             promocaoDePascoa.DataTermino = DateTime.Now.AddMonths(3);
 
-            
+
             //Adicionando produtos
             promocaoDePascoa.IncluirProduto(p1);
             promocaoDePascoa.IncluirProduto(p2);
@@ -46,9 +69,6 @@ namespace Alura.Loja.Testes.ConsoleApp
                 contexto.Promocoes.Remove(promocao);
                 contexto.SaveChanges();
             }
-
-
-            Console.ReadLine();
         }
 
         private static void ExibeEntries(IEnumerable<EntityEntry> entries)
