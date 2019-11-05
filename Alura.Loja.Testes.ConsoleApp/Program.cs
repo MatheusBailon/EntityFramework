@@ -16,7 +16,41 @@ namespace Alura.Loja.Testes.ConsoleApp
 
         static void Main(string[] args)
         {
+            using(var contexto = new LojaContext())
+            {
+                var promocao = new Promocao();
+                promocao.Descricao = "Queima Total Segundo semestre 2017";
+                promocao.DataInicio = new DateTime(2017, 6, 1);
+                promocao.DataTermino = new DateTime(2017, 10, 31);
 
+                var produtos = contexto.Produtos.Where(p => p.Categoria == "Livros").ToList();
+                foreach (var p in produtos)
+                {
+                    promocao.IncluirProduto(p);
+                }
+
+                contexto.Promocoes.Add(promocao);
+
+                ExibeEntries(contexto.ChangeTracker.Entries());
+                contexto.SaveChanges();
+            }
+
+            using(var segContexto = new LojaContext())
+            {
+                var promocao = segContexto.Promocoes.FirstOrDefault();
+                Console.WriteLine($"\nMostrando os itens da promocao {promocao.Descricao}");
+                foreach (var p in promocao.Produtos)
+                {
+                    Console.WriteLine(p);
+                }
+            }
+
+
+            Console.ReadLine();
+        }
+
+        private static void UmParaUm()
+        {
             var mano = new Cliente();
             mano.Nome = "Osvaldo Oliveira";
 
@@ -28,14 +62,12 @@ namespace Alura.Loja.Testes.ConsoleApp
                 Cidade = "São Paulo"
             };
 
-            using(var contexto = new LojaContext())
+            using (var contexto = new LojaContext())
             {
-                
+
                 contexto.Clientes.Add(mano);
                 contexto.SaveChanges();
             }
-
-            Console.ReadLine();
         }
 
         private static void MuitosParaMuitos()
