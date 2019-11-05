@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -16,7 +17,34 @@ namespace Alura.Loja.Testes.ConsoleApp
 
         static void Main(string[] args)
         {
-            using(var contexto = new LojaContext())
+            
+            using(var segContexto = new LojaContext())
+            {
+                var serviceProvider = segContexto.GetInfrastructure<IServiceProvider>();
+                var loggerFactory = serviceProvider.GetService<ILoggerFactory>();
+                loggerFactory.AddProvider(SqlLoggerProvider.Create());
+
+
+                var promocao = segContexto
+                    .Promocoes
+                    .Include(p => p.Produtos)
+                    .ThenInclude(pp => pp.Produto)
+                    .FirstOrDefault();
+
+                Console.WriteLine($"\nMostrando os itens da promocao {promocao.Descricao}");
+                foreach (var p in promocao.Produtos)
+                {
+                    Console.WriteLine(p.Produto);
+                }
+            }
+
+
+            Console.ReadLine();
+        }
+
+        private static void IncluirPromocao()
+        {
+            using (var contexto = new LojaContext())
             {
                 var promocao = new Promocao();
                 promocao.Descricao = "Queima Total Segundo semestre 2017";
@@ -34,19 +62,6 @@ namespace Alura.Loja.Testes.ConsoleApp
                 ExibeEntries(contexto.ChangeTracker.Entries());
                 contexto.SaveChanges();
             }
-
-            using(var segContexto = new LojaContext())
-            {
-                var promocao = segContexto.Promocoes.FirstOrDefault();
-                Console.WriteLine($"\nMostrando os itens da promocao {promocao.Descricao}");
-                foreach (var p in promocao.Produtos)
-                {
-                    Console.WriteLine(p);
-                }
-            }
-
-
-            Console.ReadLine();
         }
 
         private static void UmParaUm()

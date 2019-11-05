@@ -19,7 +19,7 @@ namespace Alura.Loja.Testes.ConsoleApp
         internal void IncluirProduto(Produto produto)
         {
             var promProd = new PromocaoProduto();
-            promProd.produto = produto;
+            promProd.Produto = produto;
             Produtos.Add(promProd);
         }
     }
